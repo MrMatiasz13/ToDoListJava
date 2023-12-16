@@ -1,47 +1,73 @@
 package gui;
 
 import constants.CommonConstants;
+import org.w3c.dom.css.RGBColor;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class ToDoListGUI extends JFrame {
+public class ToDoListGUI extends JFrame implements ActionListener {
+    private JPanel listPanel;
+    private JPanel addPanel;
+    private JTextField taskTextField;
+    private JButton addBtn;
+
+    private Color primary = new Color(55,0,179);
+    private Color secondary = new Color(98,0,238);
     public ToDoListGUI(){
         super(CommonConstants.FRAME_TITLE);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(CommonConstants.FRAME_SIZE[0], CommonConstants.FRAME_SIZE[1]);
-        setLayout(new BorderLayout());
-        setLocationRelativeTo(null);
-        setResizable(false);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setSize(CommonConstants.FRAME_SIZE[0], CommonConstants.FRAME_SIZE[1]);
+        this.setLayout(new BorderLayout());
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         addGUIComponent();
-        this.setVisible(true);
     }
 
     public void addGUIComponent(){
-        JPanel listPanel = new JPanel();
-        listPanel.setSize(CommonConstants.MAINPANEL_SIZE[0], CommonConstants.MAINPANEL_SIZE[1]);
-        listPanel.setBackground(Color.LIGHT_GRAY);
-        listPanel.setLayout(null);
+        listPanel = new JPanel();
+        listPanel.setPreferredSize(new Dimension(400,280));
+        listPanel.setBackground(secondary);
+        listPanel.setLayout(new GridLayout(10,1,0,5));
 
         JLabel titleLabel = new JLabel("ToDoList");
+        titleLabel.setFont(new Font("Dialog", Font.BOLD, 18));
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
         listPanel.add(titleLabel);
 
-        JPanel addPanel = new JPanel();
-        addPanel.setSize(CommonConstants.ADDPANEL[0], CommonConstants.ADDPANEL[1]);
-        addPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        addPanel.setBackground(Color.gray);
+        addPanel = new JPanel();
+        addPanel.setPreferredSize(new Dimension(400,90));
+        addPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
+        addPanel.setBackground(primary);
 
-        this.getContentPane().add(listPanel);
-        this.getContentPane().add(addPanel);
+        this.add(listPanel, BorderLayout.NORTH);
+        this.add(addPanel, BorderLayout.SOUTH);
 
         // task
-        JTextField taskTextField = new JTextField(CommonConstants.TEXTFIELD);
+        taskTextField = new JTextField(CommonConstants.TEXTFIELD);
         taskTextField.setFont(new Font("Dialog", Font.PLAIN, 18));
 
-        JButton addBtn = new JButton("Add");
+        addBtn= new JButton("Add");
         addBtn.setFont(new Font("Dialog", Font.PLAIN, 18));
+        addBtn.setFocusable(false);
+        addBtn.addActionListener(this);
 
         addPanel.add(taskTextField);
         addPanel.add(addBtn);
+
+        this.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == addBtn){
+            Task task = new Task();
+            listPanel.add(task);
+            revalidate();
+        }
     }
 }

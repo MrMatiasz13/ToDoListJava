@@ -1,7 +1,6 @@
 package gui;
 
 import constants.CommonConstants;
-import org.w3c.dom.css.RGBColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +12,7 @@ public class ToDoListGUI extends JFrame implements ActionListener {
     private JPanel addPanel;
     private JTextField taskTextField;
     private JButton addBtn;
-
-    private Color primary = new Color(55,0,179);
-    private Color secondary = new Color(98,0,238);
+    static TaskOperations taskOperations = new TaskOperations();
     public ToDoListGUI(){
         super(CommonConstants.FRAME_TITLE);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -30,7 +27,7 @@ public class ToDoListGUI extends JFrame implements ActionListener {
     public void addGUIComponent(){
         listPanel = new JPanel();
         listPanel.setPreferredSize(new Dimension(400,280));
-        listPanel.setBackground(secondary);
+        listPanel.setBackground(CommonConstants.COLOR_SECONDARY);
         listPanel.setLayout(new GridLayout(10,1,0,5));
 
         JLabel titleLabel = new JLabel("ToDoList");
@@ -42,7 +39,7 @@ public class ToDoListGUI extends JFrame implements ActionListener {
         addPanel = new JPanel();
         addPanel.setPreferredSize(new Dimension(400,90));
         addPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
-        addPanel.setBackground(primary);
+        addPanel.setBackground(CommonConstants.COLOR_PRIMARY);
 
         this.add(listPanel, BorderLayout.NORTH);
         this.add(addPanel, BorderLayout.SOUTH);
@@ -65,9 +62,20 @@ public class ToDoListGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == addBtn){
+            String taskText = taskTextField.getText();
+            try {
+                taskOperations.sendTask(taskText);
+            } catch (Exception a) {
+                System.out.println(a);
+            }
+
             Task task = new Task();
             listPanel.add(task);
             revalidate();
         }
+    }
+
+    public void getTasks(){
+
     }
 }

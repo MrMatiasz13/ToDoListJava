@@ -1,5 +1,7 @@
 package gui;
 
+import constants.CommonConstants;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,13 +11,12 @@ public class Task extends JPanel implements ActionListener {
     private String labelText = "Task";
     private JLabel taskLabel;
     private JButton doneBtn;
-    private Color taskColor = new Color(55,0,179);
 
     private boolean isDone;
     Task(){
         this.setSize(400,50);
         this.setLayout(new BorderLayout());
-        this.setBackground(taskColor);
+        this.setBackground(CommonConstants.COLOR_PRIMARY);
 
         // task label
         taskLabel = new JLabel(labelText);

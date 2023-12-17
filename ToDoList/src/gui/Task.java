@@ -8,11 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Task extends JPanel implements ActionListener {
-    private String labelText = "Task";
-    private JLabel taskLabel;
+
+    static String labelText;
+    static JLabel taskLabel;
+
     private JButton doneBtn;
 
-    private boolean isDone;
+    static boolean isDone;
     Task(){
         this.setSize(400,50);
         this.setLayout(new BorderLayout());
@@ -41,7 +43,6 @@ public class Task extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == doneBtn){
             isDone = true;
-            taskLabel.setText("<html><strike>" + labelText + "</strike></html>b");
         }
     }
 }

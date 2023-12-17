@@ -6,14 +6,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class ToDoListGUI extends JFrame implements ActionListener {
-    private JPanel listPanel;
+    public JPanel listPanel;
     private JPanel addPanel;
     private JTextField taskTextField;
     private JButton addBtn;
+
     static TaskOperations taskOperations = new TaskOperations();
-    public ToDoListGUI(){
+
+    public ToDoListGUI() throws SQLException {
         super(CommonConstants.FRAME_TITLE);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(CommonConstants.FRAME_SIZE[0], CommonConstants.FRAME_SIZE[1]);
@@ -24,7 +27,7 @@ public class ToDoListGUI extends JFrame implements ActionListener {
         addGUIComponent();
     }
 
-    public void addGUIComponent(){
+    public void addGUIComponent() throws SQLException {
         listPanel = new JPanel();
         listPanel.setPreferredSize(new Dimension(400,280));
         listPanel.setBackground(CommonConstants.COLOR_SECONDARY);
@@ -68,14 +71,6 @@ public class ToDoListGUI extends JFrame implements ActionListener {
             } catch (Exception a) {
                 System.out.println(a);
             }
-
-            Task task = new Task();
-            listPanel.add(task);
-            revalidate();
         }
-    }
-
-    public void getTasks(){
-
     }
 }

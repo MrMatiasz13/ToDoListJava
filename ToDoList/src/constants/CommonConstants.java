@@ -5,7 +5,7 @@ import java.awt.*;
 public class CommonConstants {
 
     public static final String FRAME_TITLE = "ToDoList";
-    public static final int[] FRAME_SIZE = {400,400};
+    public static final int[] FRAME_SIZE = {400,500};
     public static final int TEXTFIELD = 15;
 
     public static final Color COLOR_PRIMARY = new Color(55,0,179);

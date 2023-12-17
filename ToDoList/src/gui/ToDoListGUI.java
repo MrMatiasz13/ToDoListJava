@@ -13,6 +13,7 @@ public class ToDoListGUI extends JFrame implements ActionListener {
     private JPanel addPanel;
     private JTextField taskTextField;
     private JButton addBtn;
+    private JButton refresBtn;
 
     static TaskOperations taskOperations = new TaskOperations();
 
@@ -29,7 +30,7 @@ public class ToDoListGUI extends JFrame implements ActionListener {
 
     public void addGUIComponent() throws SQLException {
         listPanel = new JPanel();
-        listPanel.setPreferredSize(new Dimension(400,280));
+        listPanel.setPreferredSize(new Dimension(400,350));
         listPanel.setBackground(CommonConstants.COLOR_SECONDARY);
         listPanel.setLayout(new GridLayout(10,1,0,5));
 
@@ -40,7 +41,7 @@ public class ToDoListGUI extends JFrame implements ActionListener {
         listPanel.add(titleLabel);
 
         addPanel = new JPanel();
-        addPanel.setPreferredSize(new Dimension(400,90));
+        addPanel.setPreferredSize(new Dimension(400,120));
         addPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
         addPanel.setBackground(CommonConstants.COLOR_PRIMARY);
 
@@ -56,8 +57,16 @@ public class ToDoListGUI extends JFrame implements ActionListener {
         addBtn.setFocusable(false);
         addBtn.addActionListener(this);
 
+        refresBtn = new JButton("Refresh");
+        refresBtn.setFont(new Font("Dialog", Font.PLAIN, 18));
+        refresBtn.setFocusable(false);
+        refresBtn.addActionListener(this);
+
         addPanel.add(taskTextField);
         addPanel.add(addBtn);
+        addPanel.add(refresBtn);
+
+
 
         this.setVisible(true);
     }
@@ -66,10 +75,16 @@ public class ToDoListGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == addBtn){
             String taskText = taskTextField.getText();
-            try {
-                taskOperations.sendTask(taskText);
-            } catch (Exception a) {
-                System.out.println(a);
+
+            if(taskText.isEmpty()){
+                return;
+            }
+            else {
+                try {
+                    taskOperations.sendTask(taskText);
+                } catch (Exception a) {
+                    System.out.println(a);
+                }
             }
         }
     }
